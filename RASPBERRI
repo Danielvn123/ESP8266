@@ -1,19 +1,8 @@
-//# espYraspi
-//Scripts para ESP8266 y Raspberri
-/**
-Sci
-**/
-
-/****
-Script para controlar unha placa ESP8266 e conectar a unha WiFi predeterminada que xenerara 
-a placa Raspberri
-*****/
-
 #include <ESP8266WiFi.h>
 
 //Wifi móbil
 #define MAX_INTENTOS 50
-#define WIFI_SSID "ssd"
+#define WIFI_SSID "Robotica"
 #define WIFI_PASS "pass"
 
 // Pins datos
