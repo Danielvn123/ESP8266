@@ -21,15 +21,19 @@ servo motor;
 #define MQTT_PUB_SERVO "wemos/robotica/servo"
 #define MQTT_NOME_CLIENTE "Cliente servo"
 
+WiFiClient espClient;
+PubSubClient mqttClient(espClient);
+
 // Pins datos
 // GPIO14: D5
 #define LED 14
+
 int tempo = 500;
 bool conectado = false;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(LED, OUTPUT);
   motor.attach(SERVOPIN);  
   conectado = conectarWiFi();
@@ -73,4 +77,50 @@ bool conectarWiFi() { // cambiamos void por bool para que nos responda verdadeir
     conectado = false;
   }
   return(conectado);
+}
+
+void callback(String topic, byte* message, unsignedint len) {
+Serial.print("Nova mensaxe no topic:"); Serial.print(topic);
+Serial.print("Mensaxe: ");
+String mensaxeTmp == "";
+for(int i=0; i < len; i++) {
+  Serial.print((char)mensaxe[i]);
+mensaxeTmp += (char)menssage[i];
+}
+Serial.print();
+
+//Lóxica que se executa ao recibir o payload
+accionarServo(mensaxeTmp);
+}
+
+void reconnect() {
+  //Mentres non se reconecta ao servidor MQTT
+  while(!espClient.connected()) {
+    Serial.print("Tentando conectar ao servidor MQTT...");
+   if(mqttClient.connected(MQTT_NOME_CLIENTE)) {
+    Serial.println(" Conectado");
+    mqttClient.subscribe(MQTT_PUB_SERVO);
+} 
+else{
+  Serial.print("Fallo ao conectar ao servidor MQTT, rc=");
+  Serial.print(mqttClient.state());
+  Serial.println(" nova tentativa en 5 s");
+  delay(5000);
+    }
+ }
+}
+
+void accionarServo(String orde) {
+  //Comprobamos se hai orde no teclado
+orde.toLowerCase();
+if(orde.equals("esquerda")) posicion = 180;
+else if(orde.equals("dereita")) posicion = 0;
+else if(orde.equals("centro")) posicion = 90;
+else {
+  int tmp = orde.toInt();
+  if(tmp >= 0 && tmp <= 180) posicion = tmp;
+else posicion = 0;
+}
+motor.write(posicion);
+delay(tempo);
 }
