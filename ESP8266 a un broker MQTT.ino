@@ -17,7 +17,7 @@
 
 //Servo
 #define SERVOPIN 0 
-servo motor;
+Servo motor;
 #define MQTT_PUB_SERVO "wemos/robotica/servo"
 #define MQTT_NOME_CLIENTE "Cliente servo"
 
@@ -79,15 +79,15 @@ bool conectarWiFi() { // cambiamos void por bool para que nos responda verdadeir
   return(conectado);
 }
 
-void callback(String topic, byte* message, unsignedint len) {
+void callback(String topic, byte* message, unsigned int len) {
 Serial.print("Nova mensaxe no topic:"); Serial.print(topic);
 Serial.print("Mensaxe: ");
-String mensaxeTmp == "";
+String mensaxeTmp = "";
 for(int i=0; i < len; i++) {
-  Serial.print((char)mensaxe[i]);
-mensaxeTmp += (char)menssage[i];
+  Serial.print((char)message[i]);
+  mensaxeTmp += (char)message[i];
 }
-Serial.print();
+Serial.println();
 
 //Lóxica que se executa ao recibir o payload
 accionarServo(mensaxeTmp);
@@ -97,7 +97,7 @@ void reconnect() {
   //Mentres non se reconecta ao servidor MQTT
   while(!espClient.connected()) {
     Serial.print("Tentando conectar ao servidor MQTT...");
-   if(mqttClient.connected(MQTT_NOME_CLIENTE)) {
+    if(mqttClient.connect(MQTT_NOME_CLIENTE)) {
     Serial.println(" Conectado");
     mqttClient.subscribe(MQTT_PUB_SERVO);
 } 
@@ -107,19 +107,20 @@ else{
   Serial.println(" nova tentativa en 5 s");
   delay(5000);
     }
- }
+  }
 }
 
 void accionarServo(String orde) {
+  int posicion;
   //Comprobamos se hai orde no teclado
-orde.toLowerCase();
-if(orde.equals("esquerda")) posicion = 180;
-else if(orde.equals("dereita")) posicion = 0;
-else if(orde.equals("centro")) posicion = 90;
-else {
+  orde.toLowerCase();
+  if(orde.equals("esquerda")) posicion = 180;
+  else if(orde.equals("dereita")) posicion = 0;
+  else if(orde.equals("centro")) posicion = 90;
+  else {
   int tmp = orde.toInt();
   if(tmp >= 0 && tmp <= 180) posicion = tmp;
-else posicion = 0;
+  else posicion = 0;
 }
 motor.write(posicion);
 delay(tempo);
