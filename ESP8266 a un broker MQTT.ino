@@ -4,8 +4,8 @@
 
 //Wifi móbil
 #define MAX_INTENTOS 50
-#define WIFI_SSID "Robotica"
-#define WIFI_PASS "pass"
+#define WIFI_SSID "RoboticaMDQ"
+#define WIFI_PASS "pasarMDQ"
 
 // MQTT
 // Datos MQTTHQ broker en mqtthq.com
