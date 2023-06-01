@@ -16,7 +16,7 @@
 #define MQTT_PORT 1883
 
 //Servo
-#define SERVOPIN 0 
+#define SERVOPIN 0 //Pin 03, por alguna razón non funciona co nome wemos
 Servo motor;
 #define MQTT_PUB_SERVO "wemos/robotica/servo"
 #define MQTT_NOME_CLIENTE "Cliente servo"
@@ -55,7 +55,6 @@ void escintila(int espera) {
 
 // Función que se encarga de xestionar a conexión á rede
 bool conectarWiFi() { // cambiamos void por bool para que nos responda verdadeiro ou falso
-  // put your main code here, to run repeatedly:
   WiFi.mode(WIFI_STA); //Indica modo Station (conexion a outro dispositivo)
   WiFi.disconnect(); // Desconecta unha posible conexion previa
   WiFi.begin(WIFI_SSID, WIFI_PASS); // Inicia a conexion
