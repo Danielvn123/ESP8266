@@ -1,3 +1,25 @@
+/* Obxectivos:
+
+Programar esp8266 con C++ de Arduíno
+
+Identificar os parámetro necesarios para acceder a unha WiFi móbil desde dispositivos IoT
+
+Familiarizarse cos parámetros básicos da comunicación MQTT
+
+Crear un canal de comunicación MQTT entre un esp8266 e o dashboard dun móbil
+
+Comprender a necesidade de comprobar a conexión e reconexionar en caso necesario, tanto á WiFi como ao servidor MQTT
+
+Instalar e usar as librerías necesarias
+
+Empregar comunicacións serie para obter informacións da placa esp8266
+
+Descrición:
+
+Revisa o video explicativo e segue os pasos indicados para: (a) completar o script da práctica 26 para engadir conectividade MQTT, (b) engadir as bibiliotecas necesarias, (c) codificar as funcións necesarias para o correcto funcionamento da conexión MQTT, (d) engadir o código necesario no loop() para que o servo funcione, (e) conectar o servo ao esp8266 para accionamento, (f) modificar o dashboard para poder interactuar co servo.
+
+Realiza pequenos videos explicando coa túa voz cada un dos apartados anteriores.*/
+
 #include <ESP8266WiFi.h>
 #include <Servo.h>
 #include <PubSubClient.h>
@@ -77,7 +99,7 @@ void reconnect() {
  
   while(!espClient.connected()) {
     Serial.print("Tentando conectar ao servidor MQTT...");
-    if(mqttClient.conected(MQTT_NOME_CLIENTE)) {
+    if(mqttClient.connected(MQTT_NOME_CLIENTE)) {
       Serial.println(" Conectado"); 
   }
 }
