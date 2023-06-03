@@ -15,7 +15,7 @@ int tempo = 500;
 bool conectado = false;
 
 void setup() {
- :
+ 
   Serial.begin(9600); 
   pinMode(LED, OUTPUT);
   motor.attach(SERVOPIN);
@@ -77,7 +77,7 @@ void reconnect() {
  
   while(!espClient.connected()) {
     Serial.print("Tentando conectar ao servidor MQTT...");
-    if(mqttClient.conectet(MQTT_NOME_CLIENTE)) {
+    if(mqttClient.conected(MQTT_NOME_CLIENTE)) {
       Serial.println(" Conectado"); 
   }
 }
